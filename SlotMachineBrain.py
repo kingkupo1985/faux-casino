@@ -1,3 +1,4 @@
+import random
 class SlotMachine():
     def __init__(self, par_sheet):
         self.par_sheet = par_sheet
@@ -39,3 +40,5 @@ class SlotMachine():
     def calculate_payout(self, win_lines, bet_amount, bet_lines):
         # Calculate the payout based on win lines, bet amount, and bet lines
         pass
+
+

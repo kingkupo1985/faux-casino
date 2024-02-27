@@ -6,12 +6,17 @@
 
 <div class="container" style="margin-top: 50px; height:750px width:100%">
     <div class="row flew-column" style="height:750px; margin-left: 10%">
-        {% for reel in reels %}
+        {% for reel_key, reel_data in reels.items() %}
             <div class="reel-container" align="center">
-                <div class="col h-100 reel" id="reel{{ reel }}">
-                    {% for i in range(1, 241) %}
-                        {% set index = ((loop.index0 + 20) % 20) + 1 %}
-                        <img src="{{ url_for('static', filename=reels[reel]['symbol_' ~ index]['image_url']) }}">
+                <div class="col h-100 reel" id="reel{{ reel_key }}">
+                    {% set total_weight = 0 %}
+                    {% for symbol_data in reel_data.values() %}
+                        {% set total_weight = total_weight + symbol_data['weight'] %}
+                    {% endfor %}
+                    {% for _ in range(1, 241) %}
+                        {% set random_index = random_weighted_index(reel_data) %}
+                        {% set symbol_data = reel_data[random_index] %}
+                        <img src="{{ url_for('static', filename=symbol_data['image_url']) }}" class="symbol" width="150" height="150">
                     {% endfor %}
                 </div>
             </div>

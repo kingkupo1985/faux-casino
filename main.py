@@ -2,7 +2,6 @@ import random
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
-from jinja2 import Environment
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 from SlotMachineBrain import SlotMachine
@@ -51,16 +50,20 @@ def slot_machine():
         # for j in range(1, 21):
         #     print()
         #     print(f"URL: {par_sheet[f'symbol_{j}']['image_url']} | Weight: {par_sheet[f'symbol_{j}']['weight']}")
-    print(f"line50 : reels: {reels}")
-    return render_template('SlotMachine.html', reels=reels)
+    print(f"{reels}")
+    return render_template('SlotMachine.html', reels=reels, random_weighted_index=random_weighted_index)
 
 # Functions to be moved to class later
-def generate_mock_reels():
-    reels = []
-    for _ in range(5):
-        reel = random.sample(range(1, 21), 5)  # Randomly select 5 images out of 20
-        reels.append(reel)
-    return reels
+def random_weighted_index(reel):
+    total_weight = sum(symbol_data['weight'] for symbol_data in reel.values())
+    rand_weight = random.uniform(0, total_weight)
+    cumulative_weight = 0
+    for symbol, symbol_data in reel.items():
+        cumulative_weight += symbol_data['weight']
+        if rand_weight < cumulative_weight:
+            return symbol
+    # In case of unexpected situation, return the last symbol
+    return symbol
 
 if __name__ == '__main__':
     app.run(debug=True)
