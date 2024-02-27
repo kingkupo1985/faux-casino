@@ -1,0 +1,11 @@
+/* styles.css */
+
+/* Custom styles */
+
+.container {
+    width: 700px;
+    height: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

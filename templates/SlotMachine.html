@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Slot Machine{% endblock %}
+
+{% block content %}
+
+<div class="container" align="center" style="height:750px">
+    <div class="row flew-column" style="height:750px">
+        {% for reel in reels %}
+        <div class="col h-100 reel" style="overflow: scroll">
+            {% for i in range(1, 21) %}
+                {% set index = ((loop.index0 + 20) % 20) + 1 %}
+                <img src="{{ url_for('static', filename=reels[reel]['symbol_' ~ index]['image_url']) }}">
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
