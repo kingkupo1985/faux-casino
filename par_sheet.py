@@ -46,7 +46,7 @@ class ParSheet():
         return par_sheet
 
 #Example Usage
-pars = ParSheet()
-reel_par_sheets = [pars.generate_par_sheet() for _ in range(5)]
-for reel in reel_par_sheets:
-    print(f"{reel}")
+# pars = ParSheet()
+# reel_par_sheets = [pars.generate_par_sheet() for _ in range(5)]
+# for reel in reel_par_sheets:
+#     print(f"{reel}")

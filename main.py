@@ -51,6 +51,7 @@ def slot_machine():
         # for j in range(1, 21):
         #     print()
         #     print(f"URL: {par_sheet[f'symbol_{j}']['image_url']} | Weight: {par_sheet[f'symbol_{j}']['weight']}")
+    print(f"line50 : reels: {reels}")
     return render_template('SlotMachine.html', reels=reels)
 
 # Functions to be moved to class later
