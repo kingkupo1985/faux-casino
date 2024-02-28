@@ -1,15 +1,20 @@
 import random
 from flask import Flask, render_template
+from flask_assets import Environment
+from flask_scss import Scss
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
-from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 from SlotMachineBrain import SlotMachine
+from PIL import Image
+from datetime import date
 from par_sheet import ParSheet
 
 
 # Initialize Flask
 app = Flask(__name__)
+scss = Scss(app, static_dir='static', asset_dir='static/scss')
+assets = Environment(app)
 
 # Jinja Function to put par_sheet to list in html
 def dict_values_to_list(d):
@@ -53,6 +58,17 @@ def slot_machine():
     print(f"{reels}")
     return render_template('SlotMachine.html', reels=reels, random_weighted_index=random_weighted_index)
 
+
+@app.route('/slot-machine2', methods=['GET', 'POST'])
+def slot_machine2():
+    reels = {}
+    for i in range(1, 6):
+        par_sheet = ParSheet().generate_par_sheet()
+        reels[i] = par_sheet
+
+    return render_template('SlotMachine2.html', images=final_images_urls)
+
+
 # Functions to be moved to class later
 def random_weighted_index(reel):
     total_weight = sum(symbol_data['weight'] for symbol_data in reel.values())
@@ -65,5 +81,63 @@ def random_weighted_index(reel):
     # In case of unexpected situation, return the last symbol
     return symbol
 
+
+def create_vertical_images(reels):
+    # Create a list to hold the final images
+    final_images_urls = []
+
+    # Create a list to hold symbol IDs and their positions
+    symbol_positions = []
+
+    # Loop through each reel, dividing them into 5 groups
+    for i in range(1, 6):
+        # Create a blank image with a size large enough to fit all the images
+        max_width = 150  # Assuming each image is 150x150
+        total_height = 150 * 48  # Total height for 48 images per reel
+        final_image = Image.new("RGB", (max_width, total_height))
+
+        y_offset = 0
+        for reel_key, reel_data in reels.items():
+            # Check if the reel belongs to the current group
+            if reel_key == i:
+                for symbol_position in range(1, 49):  # 48 images per reel
+                    random_index = random_weighted_index(reel_data)
+                    symbol_data = reel_data[random_index]
+
+                    # print(f"line 109: symbol_data: {symbol_data} | reel_data: {reel_data[f'{random_index}']} | random_index = {random_index}")
+                    # Get the image URL for the symbol
+                    image_url = symbol_data['image_url']
+                    file_path = f"static/{image_url}"
+                    img = Image.open(file_path)
+                    # Paste the image onto the final image
+                    final_image.paste(img, (0, y_offset))
+                    # Update the y offset for the next image
+                    y_offset += 150
+                    # Append symbol ID and its position to the list
+                    symbol_positions.append((random_index, symbol_position))
+                    final_image_save_path = f"static/img/final_image_{i}.png"
+                    final_image_path = f"img/final_image_{i}.png"
+                    final_image.save(final_image_save_path)
+
+        # Append the final image to the list
+        final_images_urls.append(final_image_path)
+
+    return final_images_urls, symbol_positions
+
+
+# Usage example:
+# reels = {}
+# for i in range(1, 6):
+#     par_sheet = ParSheet().generate_par_sheet()
+#     reels[i] = par_sheet
+# final_images_url, symbol_numbers = create_vertical_images(reels)
+# print(f"Final_images: {final_images_url}")
+# print(f"{final_image_url}")
+# print(f"{symbol_numbers}")
+
+final_images_urls = ['img/final_image_1.png', 'img/final_image_2.png', 'img/final_image_3.png','img/final_image_4.png', 'img/final_image_5.png']
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+

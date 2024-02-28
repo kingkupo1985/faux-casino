@@ -1,0 +1,46 @@
+/* styles.css */
+/* Custom styles */
+html, body{
+    height: 100%;
+}
+
+.slots{
+    width: 825px;
+    height: 750px;
+    border: 1px solid black;
+    display: flex;
+    justify-center: space-between;
+    padding: calc(0.3 * 150px);
+
+    .reels{
+        border: 1px solid black;
+        width: 150px;
+        height: calc(5 * 150px);
+        background-repeat: repeat-y;
+        background-position: 0 0;
+    }
+}
+
+.reel-container {
+    height: 760px; /* Adjust the height of the reel container as needed */
+    overflow: hidden;
+    border: 1px solid #ccc; /* Add border for better visualization */
+}
+
+.reel {
+    display: flex;
+    flex-direction: column;
+    animation-timing-function: cubic-bezier(0.1, 0.65, 0.1, 1);
+    animation-iteration-count: infinite;
+}
+
+.reel-container img {
+    max-width: 100%; /* Ensure images fit within the container */
+    height: auto; /* Preserve aspect ratio */
+}
+
+@media (max-width: 768px) {
+    .reel-container {
+        width: 25%; /* Adjust the width for smaller screens */
+    }
+}

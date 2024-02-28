@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Slot Machine{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="slots">
+        {% for i in range(5) %}
+            <div class="reels" style="background-image: url('{{url_for('static', filename=images[i])}}')">
+
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

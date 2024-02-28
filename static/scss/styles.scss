@@ -1,0 +1,25 @@
+$icon_width: 150px;
+$icon_height: 150px;
+$num_icons: 240;
+
+.slots{
+    width: 825px;
+    height: 750px;
+    border: 1px solid black;
+    display: flex;
+    justify-center: space-between;
+    padding: 0.3 * 150px;
+
+    .reels{
+        border: 1px solid black;
+        width: $icon_width;
+        height: 5 * $icon_height;
+        background-image: url();
+        background-repeat: repeat-y;
+        background-position: 0 0;
+    }
+}
+.reel-container {
+    height: 760px; /* Adjust the height of the reel container as needed */
+    overflow: hidden;
+}

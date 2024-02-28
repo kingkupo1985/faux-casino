@@ -9,10 +9,6 @@
         {% for reel_key, reel_data in reels.items() %}
             <div class="reel-container" align="center">
                 <div class="col h-100 reel" id="reel{{ reel_key }}">
-                    {% set total_weight = 0 %}
-                    {% for symbol_data in reel_data.values() %}
-                        {% set total_weight = total_weight + symbol_data['weight'] %}
-                    {% endfor %}
                     {% for _ in range(1, 241) %}
                         {% set random_index = random_weighted_index(reel_data) %}
                         {% set symbol_data = reel_data[random_index] %}
@@ -23,12 +19,12 @@
         {% endfor %}
     </div>
 </div>
-<div align="center">
-    <button class="btn btn-primary" onclick="startSlotMachine()">Start</button>
+<div class="containter" align="center">
+    <button id="startButton" class="btn btn-primary">Start</button>
 </div>
 <style>
     .reel-container {
-        height: 750px; /* Adjust the height of the reel container as needed */
+        height: 760px; /* Adjust the height of the reel container as needed */
         overflow: hidden;
         border: 1px solid #ccc; /* Add border for better visualization */
     }
@@ -36,10 +32,14 @@
     .reel {
         display: flex;
         flex-direction: column;
-        animation-name: slide;
-        animation-duration: 10s;
         animation-timing-function: cubic-bezier(0.1, 0.65, 0.1, 1);
         animation-iteration-count: infinite;
+    }
+
+    .symbol {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 2px; /* Adjust the margin between symbols */
     }
 
     @keyframes slide {
@@ -50,15 +50,12 @@
             transform: translateY(-100%);
         }
     }
-
-    .symbol {
-        width: 100%;
-        height: 150px;
-        margin-bottom: 2px; /* Adjust the margin between symbols */
-    }
 </style>
 <script>
+document.getElementById("startButton").addEventListener("click", startSlotMachine);
+
 function startSlotMachine() {
+    console.log("Start button clicked"); // Debugging statement
     // Start sliding animation for each reel
     for (let i = 1; i <= 5; i++) {
         slideReel('reel' + i);
@@ -66,10 +63,27 @@ function startSlotMachine() {
 }
 
 function slideReel(reelId) {
+    console.log("Sliding reel: " + reelId); // Debugging statement
     const reel = document.getElementById(reelId);
-    reel.style.animation = 'none'; // Reset animation
-    reel.offsetHeight; // Trigger reflow
-    reel.style.animation = null; // Start animation
+    reel.style.animationName = 'slide';
+    const duration = getRandomDuration(); // Random duration for each reel
+    reel.style.animationDuration = '10s';
+    const delay = getRandomDelay(); // Random delay for each reel
+    reel.style.animationDelay = '0s';
+    const iterations = getRandomIterations(); // Random iterations for each reel
+    reel.style.animationIterationCount = iterations;
+}
+
+function getRandomDuration() {
+    return Math.floor(Math.random() * 4 + 2) + 's'; // Random duration between 2s and 5s
+}
+
+function getRandomDelay() {
+    return '-' + Math.floor(Math.random() * 10) + 's'; // Random delay between 0s and -10s
+}
+
+function getRandomIterations() {
+    return Math.floor(Math.random() * 4) + 2; // Random number of iterations between 2 and 5
 }
 </script>
 
