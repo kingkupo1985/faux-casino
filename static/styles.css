@@ -4,20 +4,35 @@ html, body{
     height: 100%;
 }
 
+body{
+    background: linear-gradient(45deg, grey 0%, lightgrey 100%)
+}
+
+.button{
+    background-color: #007bff;
+}
+
 .slots{
-    width: 825px;
-    height: 750px;
+    width: 1000px;
+    height: 850px;
+    margin: auto;
     border: 1px solid black;
     display: flex;
     justify-center: space-between;
+    justify-content: center;
     padding: calc(0.3 * 150px);
+    align: center;
+    background: linear-gradient(45deg, grey 0%, lightgray 100%);
 
     .reels{
         border: 1px solid black;
         width: 150px;
         height: calc(5 * 150px);
         background-repeat: repeat-y;
-        background-position: 0 0;
+        background-position: center 0;
+        border-width: 3px;
+        border-image: linear-gradient(to right, gold, goldenrod) 1;
+        margin: 2px;
     }
 }
 
@@ -39,8 +54,82 @@ html, body{
     height: auto; /* Preserve aspect ratio */
 }
 
-@media (max-width: 768px) {
-    .reel-container {
-        width: 25%; /* Adjust the width for smaller screens */
+/* Extra small devices (phones) */
+@media (max-width: 575.98px) {
+    .slots{
+        background-size: contain;
+        width: auto;
+        height: auto;
+    }
+
+    .reels {
+        background-size: auto;
+        width: auto; /* Allow reels to shrink to fit the screen */
+        height: auto; /* Allow reels to shrink to fit the screen */
+    }
+  /* CSS rules for extra small devices */
+}
+
+/* Small devices (tablets) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .slots{
+        background-size: contain;
+        width: auto;
+        height: auto;
+    }
+
+    .reels {
+        background-size: auto;
+        width: 100px; /* Allow reels to shrink to fit the screen */
+        height: 100px; /* Allow reels to shrink to fit the screen */
+    }
+  /* CSS rules for small devices */
+}
+
+/* Medium devices (small laptops) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* CSS rules for medium devices */
+  .slots{
+        background-size: auto;
+        width: auto;
+        height: auto;
+    }
+
+    .reels {
+        background-size: auto;
+        width: 100px; /* Allow reels to shrink to fit the screen */
+        height: 100px; /* Allow reels to shrink to fit the screen */
+    }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  /* CSS rules for large devices */
+    .slots{
+        background-size: auto;
+        width: auto;
+        height: auto;
+    }
+
+    .reels {
+        background-size: auto;
+        width: 100px; /* Allow reels to shrink to fit the screen */
+        height: 100px; /* Allow reels to shrink to fit the screen */
+    }
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+  /* CSS rules for extra large devices */
+    .slots{
+        background-size: auto;
+        width: auto;
+        height: auto;
+    }
+
+    .reels {
+        background-size: auto;
+        width: 150px; /* Allow reels to shrink to fit the screen */
+        height: 150px; /* Allow reels to shrink to fit the screen */
     }
 }

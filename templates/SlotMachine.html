@@ -11,7 +11,7 @@
                 <div class="col h-100 reel" id="reel{{ reel_key }}">
                     {% for _ in range(1, 241) %}
                         {% set random_index = random_weighted_index(reel_data) %}
-                        {% set symbol_data = reel_data[random_index] %}
+                        {% set symbol_data = reel_data['symbol_' ~ random_index] %}
                         <img src="{{ url_for('static', filename=symbol_data['image_url']) }}" class="symbol" width="150" height="150">
                     {% endfor %}
                 </div>
@@ -51,40 +51,5 @@
         }
     }
 </style>
-<script>
-document.getElementById("startButton").addEventListener("click", startSlotMachine);
-
-function startSlotMachine() {
-    console.log("Start button clicked"); // Debugging statement
-    // Start sliding animation for each reel
-    for (let i = 1; i <= 5; i++) {
-        slideReel('reel' + i);
-    }
-}
-
-function slideReel(reelId) {
-    console.log("Sliding reel: " + reelId); // Debugging statement
-    const reel = document.getElementById(reelId);
-    reel.style.animationName = 'slide';
-    const duration = getRandomDuration(); // Random duration for each reel
-    reel.style.animationDuration = '10s';
-    const delay = getRandomDelay(); // Random delay for each reel
-    reel.style.animationDelay = '0s';
-    const iterations = getRandomIterations(); // Random iterations for each reel
-    reel.style.animationIterationCount = iterations;
-}
-
-function getRandomDuration() {
-    return Math.floor(Math.random() * 4 + 2) + 's'; // Random duration between 2s and 5s
-}
-
-function getRandomDelay() {
-    return '-' + Math.floor(Math.random() * 10) + 's'; // Random delay between 0s and -10s
-}
-
-function getRandomIterations() {
-    return Math.floor(Math.random() * 4) + 2; // Random number of iterations between 2 and 5
-}
-</script>
 
 {% endblock %}
