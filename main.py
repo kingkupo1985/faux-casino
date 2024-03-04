@@ -66,7 +66,7 @@ def slot_machine2():
         reels[i] = par_sheet
         print(f"{reels[i]}")
     final_images_urls, symbol_numbers = create_vertical_images(reels)
-    return render_template('SlotMachine2.html', images=final_images_urls, year=year)
+    return render_template('SlotMachine2.html', images=final_images_urls, symbols_positions=symbol_numbers, year=year)
 
 
 # Functions to be moved to class later
@@ -88,17 +88,17 @@ def random_weighted_index(reel_data):
 def create_vertical_images(reels):
     # Create a list to hold the final images
     final_images_urls = []
-
     # Create a list to hold symbol IDs and their positions
     symbol_positions = []
-
+    final_symbol_positions = {}
     # Loop through each reel, dividing them into 5 groups
     for i in range(1, 6):
         # Create a blank image with a size large enough to fit all the images
         max_width = 150  # Assuming each image is 150x150
         total_height = 150 * 60  # Total height for 60 images per reel
         final_image = Image.new("RGB", (max_width, total_height))
-        y_offset = 0 # Set Y offset
+        y_offset = 0  # Set Y offset
+        symbol_positions = []  # Reset Symbol Positions for next reel
 
         while y_offset < total_height:
             for reel_key, reel_data in reels.items():
@@ -127,9 +127,12 @@ def create_vertical_images(reels):
         final_image.save(final_image_save_path)
 
         # Append the final image to the list
+        final_symbol_positions[f'final_image_{i}'] = symbol_positions
         final_images_urls.append(final_image_path)
+    print(final_symbol_positions)
 
-    return final_images_urls, symbol_positions
+
+    return final_images_urls, final_symbol_positions
 
 
 # Usage example:

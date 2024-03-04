@@ -13,4 +13,11 @@
         <button id="startButton" class="btn btn-primary">SPIN</button>
     </div>
 </div>
+<script>
+    var symbols_positions = {
+        {% for key, value in symbols_positions.items() %}
+            {{ key|safe }}: {{ value|tojson|safe }},
+        {% endfor %}
+    };
+</script>
 {% endblock %}
